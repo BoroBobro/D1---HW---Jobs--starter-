@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Job from "./Job";
+import { useDispatch } from "react-redux";
 
 const MainSearch = () => {
+  const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [jobs, setJobs] = useState([]);
 
@@ -41,7 +43,10 @@ const MainSearch = () => {
         </Col>
         <Col xs={10} className="mx-auto mb-5">
           {jobs.map(jobData => (
+            <div key={jobData._id} style={{display: "block"}}>
             <Job key={jobData._id} data={jobData} />
+            <button onClick={() => dispatch({type: "ADD_FAVOURITE_COMPANY", payload: jobData.company_name})} style={{background: "transparent", border: "none"}}>⭐</button>
+            </div>
           ))}
         </Col>
       </Row>
