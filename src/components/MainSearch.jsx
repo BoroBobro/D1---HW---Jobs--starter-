@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Job from "./Job";
 import { useDispatch } from "react-redux";
+import { addToFavourite } from "../redux/action/action";
 
 const MainSearch = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,8 @@ const MainSearch = () => {
           {jobs.map(jobData => (
             <div key={jobData._id} style={{display: "block"}}>
             <Job key={jobData._id} data={jobData} />
-            <button onClick={() => dispatch({type: "ADD_FAVOURITE_COMPANY", payload: jobData.company_name})} style={{background: "transparent", border: "none"}}>⭐</button>
+            {/* <button onClick={() => dispatch({type: "ADD_FAVOURITE_COMPANY", payload: jobData.company_name})} style={{background: "transparent", border: "none"}}>⭐</button> */}
+            <button onClick={() => dispatch(addToFavourite(jobData.company_name))}>⭐</button>
             </div>
           ))}
         </Col>
