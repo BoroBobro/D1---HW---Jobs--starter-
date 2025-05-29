@@ -1,34 +1,39 @@
 import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Job from "./Job";
-import { useDispatch } from "react-redux";
-import { addToFavourite } from "../redux/action/action";
+import { useDispatch, useSelector } from "react-redux";
+import { addToFavourite, setSearchResults } from "../redux/action/action";
 
 const MainSearch = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [jobs, setJobs] = useState([]);
+  // const [jobs, setJobs] = useState([]);
 
-  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=developer&limit=10";
+  const jobs = useSelector(state => state.search.results)
+  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=";
 
   const handleChange = e => {
     setQuery(e.target.value);
   };
 
   const handleSubmit = async e => {
+
     e.preventDefault();
 
-    try {
-      const response = await fetch(baseEndpoint + query + "&limit=20");
-      if (response.ok) {
-        const { data } = await response.json();
-        setJobs(data);
-      } else {
-        alert("Error fetching results");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await fetch(baseEndpoint + query + "&limit=20");
+    //   if (response.ok) {
+    //     const { data } = await response.json();
+    //     // setJobs(data);
+    //     dispatch(setSearchResults(data))
+    //   } else {
+    //     alert("Error fetching results");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    dispatch(setSearchResults(baseEndpoint, query))
   };
 
   return (

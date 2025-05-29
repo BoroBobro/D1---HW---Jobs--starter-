@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 const Favourites = () => {
-  const companies = useSelector(state => state.main.favourites.companies);
+  const companies = useSelector(state => state.favourites.companies);
 
   return (
     <div>
